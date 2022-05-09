@@ -3,17 +3,13 @@
 
 ## About
 
-The project is divided into 3 parts:
+The project is divided into 4 parts:
 - Shelf and Scissor Actuator
 - Shelf App
 - Client App
 - Cart
 
-The Shelf and the Cart are controlled through the ESP32 Microcontroller
-
-The app is made using Java and connected w/ the DB using MQTT Protocol
-
-## Items Used
+## Items/Tools Used
 
 - Shelf:
     - ESP32
