@@ -147,9 +147,11 @@ while True:
     print('FE: {} E: {} D: {} FD: {}'.format(FE.value(), E.value(), D.value(), FD.value()))
 
     if button.value():
+        led.value(1)
         sequence()
         # test()
     else:
+        led.value(0)
         move('park')
 
     sleep(0.1)
