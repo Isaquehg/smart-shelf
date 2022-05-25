@@ -1,11 +1,10 @@
-folhas de mdf 3mm:
-[mm]
--Hastes: 8 (2 folhas x 4 hastes) folhas 180x30
--Junções Vermelhas(Pontos fixos): 3 folhas 30x45
--Junções Amarelas (Ponto móvel base): 8 folhas 30x45 COM FURO
--Junções Verdes (Ponto móvel plataforma): 3 folhas 30x45
--Base: 7 folhas 200x100
--Plataforma: 6 folhas 200x100
-	1x: inteira
-	3x: com buraco junção vermelha(50x16) e buraco grande(110x75)
-	2x: 90x100 com buraco junção vermelha
+QUANTIDADES DE CHAPAS por arquivo
+-Hastes: 4 chapas 6mm (1 folha x 4 hastes) 180x30mm
+-Junções Vermelhas(Pontos fixos): 1x chapa 3mm e 1x chapa 6mm - 30x45mm
+-Junções Verdes (Ponto móvel plataforma): 1x chapa 3mm e 1x chapa 6mm - 30x45mm
+-Junções Amarelas (Ponto móvel base (COM FURO)): 4 chapas 6mm - 30x45mm
+-Base: 3x chapas 6mm e 1x chapa 3mm - 200x100
+-Plataformas:
+	Plataforma_1: 1x chapa 3mm
+	Plataforma_2: 1x chapa 3mm e 1x chapa 6mm Plataforma_2
+	Plataforma_3: 1x 6mm
