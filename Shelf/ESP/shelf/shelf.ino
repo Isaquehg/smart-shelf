@@ -12,7 +12,7 @@ const int mqttPort = 1883;                     //porta
 const char* mqttTopicSub = "broker";           //tópico que sera assinado
 const char* mqttUser = "csilab";              //usuário
 const char* mqttPassword = "WhoAmI#2020";      //senha
-const char *ID = "Treinamento";  // Nome do dispositivo - MUDE PARA NÃO HAVER COLISÃO
+const char *ID = "SMARTSHELF";  // Nome do dispositivo - MUDE PARA NÃO HAVER COLISÃO
 
 WiFiClient espClient; // Cria o objeto espClient
 PubSubClient client(espClient); //instancia o Cliente MQTT passando o objeto espClient
