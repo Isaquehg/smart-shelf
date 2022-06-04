@@ -122,8 +122,8 @@ void loop(){
   while(dist >= 50 && itens > 0){ //distancia sem o produto
     delay(5000);
     itens -= 1;//remover uma unidade do estoque
-    servo.write(angle);//mover atuador
-    angulo_movido += angle;
+    servo.write(0);//mover atuador
+    angulo_movido += 1;
     movido = true;
     digitalWrite(led1, HIGH);
     Serial.print("Distancia = ");
@@ -131,11 +131,11 @@ void loop(){
   }
   Serial.print("Passou: ");
   Serial.println(itens);
-  if(movido == true){ //se entrou no loop anterior
+  if(angulo_movido > 0){ //se entrou no loop anterior
     delay(500);
-    servo.write(-angulo_movido);//voltar o atuador para posicao inicial
+    servo.write(180);//voltar o atuador para posicao inicial
+    angulo_movido -= 1;
   }
-
 
   //MQTT  
   client.loop();
