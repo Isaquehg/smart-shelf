@@ -1,6 +1,13 @@
-#include <Servo.h>
+#include <Stepper.h>       // motor de passo NEMA17
+#include <Ultrassonic.h>   // ultrassonico
 #include <ESP8266WiFi.h>   // biblioteca do Node MCU
 #include <PubSubClient.h>  // biblioteca comunicação mqtt
+
+//nema pin setup
+#define IN1 14
+#define IN2 27
+#define IN3 26
+#define IN4 25
 
 //informações da rede WIFI
 const char* ssid = "CSI-Lab"; //SSID da rede WIFI
@@ -8,27 +15,32 @@ const char* password = "In@teLCS&I"; //senha da rede wifi
 
 //informações do broker MQTT
 const char* mqttServer = "192.168.66.32";   //servidor
-const int mqttPort = 1883;                     //porta
-const char* mqttTopicSub = "broker";           //tópico que sera assinado
-const char* mqttUser = "csilab";              //usuário
-const char* mqttPassword = "WhoAmI#2020";      //senha
+const int mqttPort = 1883;                  //porta
+const char* mqttTopicSub = "broker";        //tópico que sera assinado
+const char* mqttUser = "csilab";            //usuário
+const char* mqttPassword = "WhoAmI#2020";   //senha
 const char *ID = "SMARTSHELF";  // Nome do dispositivo - MUDE PARA NÃO HAVER COLISÃO
 
 WiFiClient espClient; // Cria o objeto espClient
 PubSubClient client(espClient); //instancia o Cliente MQTT passando o objeto espClient
 
-//PROTOTIPOS DE FUNCOES DAS CONEXOES INTERNET - MQTT
+//prototipos da funcoes de conexoes com internet - MQTT
 void conectar();
 void conectarmqtt();
 
-//inicializando Servo
-Servo servo;
+//inicializando motor de passo
+Stepper motor(steps_per_rev, IN1, IN2, IN3, IN4);
+const int steps_per_rev = 200; //Set to 200 for NEMA 17
+
+//inicializando ultrassonico
+Ultrassonic ultrassom(7, 8);// trigger & echo pins
+float dist = 0.0;
 
 void setup(){
   Serial.begin(115200);//monitor
+  motor.setSpeed(60);//nema17 speed
   pinMode(1, INPUT);//trigger
   pinMode(2, INPUT);//echo
-  servo.attach(3);//servo motor
   pinMode(7, OUTPUT);//led
 
   //Funções MQTT
@@ -42,7 +54,7 @@ void callback(char* topic, byte* payload, unsigned int length){
   int MSG = atoi((char*)payload);
 }
 
-void conectar()//FUNCAO DA CONEXAO COM A INTERNET
+void conectar()//Conectar com internet
 {
   delay(10);
   Serial.println("------Conexao WI-FI------");
@@ -67,7 +79,7 @@ void conectar()//FUNCAO DA CONEXAO COM A INTERNET
   Serial.println(WiFi.localIP());
 }
 
-void conectarmqtt () //FUNCAO DE CONEXAO COM O BROKER
+void conectarmqtt () //conectar com broker
 {
   client.setServer(mqttServer, mqttPort);
   client.setCallback(callback);
@@ -91,55 +103,40 @@ void conectarmqtt () //FUNCAO DE CONEXAO COM O BROKER
 }
 
 void loop(){
-  int led1 = 7;//verificar quando sensor funciona
-  int angle = 0;//angulo para mover o produto(7.5cm)
-  int angulo_movido = 0;//quantas movimentacoes foram feitas
-  bool movido = false;//verificar se o atuador mexeu
+  int led1_pin = 2;//verificar quando sensor esta funcionando
 
   //obter quantidade de itens em estoque do DB
   int itens = 5;//prateleira cheia(obter valor do DB)
 
   //configuracao ultrassonico
-  long duracao = 0;//duracao de ida e volta
-  float dist = 0.0;//distancia
-  digitalWrite(1, LOW);//inicializa o trigger
-  delayMicroseconds(5);
-  digitalWrite(1, HIGH);//envio do sinal
-  delayMicroseconds(5);
-  digitalWrite(1, LOW);//retorna o som
-
-  duracao = pulseIn(2, HIGH);//inicia a contagem
-  dist = duracao * 0.034 / 2.0;//distancia em cm
+  dist = ultrasson.Ranging(CM);//calcula da distancia(cm)
+  Serial.print("Distancia: ");
+  Serial.println(dist);
 
   //configuracao servo
-  servo.write(angle);
-  delay(15);
-  angle = 45;//valor para mover 7.5cm
+  servo.write(0);//posicao inicial
   
-  //mover produtos
-  delay(30);
-  Serial.println(itens);
-  while(dist >= 50 && itens > 0){ //distancia sem o produto
-    delay(5000);
-    itens -= 1;//remover uma unidade do estoque
-    servo.write(0);//mover atuador
-    angulo_movido += 1;
-    movido = true;
-    digitalWrite(led1, HIGH);
-    Serial.print("Distancia = ");
-    Serial.println(dist);
-  }
-  Serial.print("Passou: ");
-  Serial.println(itens);
-  if(angulo_movido > 0){ //se entrou no loop anterior
-    delay(500);
-    servo.write(180);//voltar o atuador para posicao inicial
-    angulo_movido -= 1;
-  }
-
   //MQTT  
   client.loop();
   delay(2000);
   Serial.println("publicou!");
-  client.publish("node", "oi");//publicacao no broker MQTT
+  client.publish("node", "smart shelf");//publicacao no broker MQTT
+
+  //mover atuador
+  int giros = 0;
+  digitalWrite(led1_pin, LOW);//nao esta movendo
+  while(dist >= 50 && itens > 0){ //distancia sem o produto e com estoque
+    digitalWrite(led1_pin, HIGH);
+    motor.step(steps_per_rev);
+    giros ++;
+    delay(500);
+  }
+  digitalWrite(led1_pin, LOW);//nao esta movendo
+
+  //retornar atuador
+  while(giros > 0){
+    motor.step(-steps_per_rev);
+    giros --;
+    delay(500);
+  }
 }
