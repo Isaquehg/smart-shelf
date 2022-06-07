@@ -1,5 +1,5 @@
 #include <Stepper.h>       // motor de passo NEMA17
-#include <Ultrassonic.h>   // ultrassonico
+#include <Ultrasonic.h>    // ultrassonico
 #include <ESP8266WiFi.h>   // biblioteca do Node MCU
 #include <PubSubClient.h>  // biblioteca comunicação mqtt
 
@@ -8,6 +8,10 @@
 #define IN2 27
 #define IN3 26
 #define IN4 25
+
+//hc-sr04 pin setup
+#define trigger 7
+#define echo 8
 
 //informações da rede WIFI
 const char* ssid = "CSI-Lab"; //SSID da rede WIFI
@@ -29,19 +33,17 @@ void conectar();
 void conectarmqtt();
 
 //inicializando motor de passo
-Stepper motor(steps_per_rev, IN1, IN2, IN3, IN4);
 const int steps_per_rev = 200; //Set to 200 for NEMA 17
+Stepper motor(steps_per_rev, IN1, IN2, IN3, IN4);
 
 //inicializando ultrassonico
-Ultrassonic ultrassom(7, 8);// trigger & echo pins
+Ultrasonic ultrassom(trigger, echo);// trigger & echo pins
 float dist = 0.0;
 
 void setup(){
   Serial.begin(115200);//monitor
   motor.setSpeed(60);//nema17 speed
-  pinMode(1, INPUT);//trigger
-  pinMode(2, INPUT);//echo
-  pinMode(7, OUTPUT);//led
+  pinMode(9, OUTPUT);//led1
 
   //Funções MQTT
   conectar();
@@ -109,12 +111,9 @@ void loop(){
   int itens = 5;//prateleira cheia(obter valor do DB)
 
   //configuracao ultrassonico
-  dist = ultrasson.Ranging(CM);//calcula da distancia(cm)
+  dist = ultrassom.Ranging(CM);//calcula da distancia(cm)
   Serial.print("Distancia: ");
   Serial.println(dist);
-
-  //configuracao servo
-  servo.write(0);//posicao inicial
   
   //MQTT  
   client.loop();
