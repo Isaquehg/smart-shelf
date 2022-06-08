@@ -123,18 +123,21 @@ void loop(){
 
   //mover atuador
   int giros = 0;
+  int step_produto = steps_per_rev * 5;//numero de revolucoes para mover 1 produto
+  
   digitalWrite(led1_pin, LOW);//nao esta movendo
   while(dist >= 50 && itens > 0){ //distancia sem o produto e com estoque
     digitalWrite(led1_pin, HIGH);
-    motor.step(steps_per_rev);
+    motor.step(step_produto);
     giros ++;
     delay(500);
+    dist = ultrassom.Ranging(CM);
   }
   digitalWrite(led1_pin, LOW);//nao esta movendo
 
   //retornar atuador
   while(giros > 0){
-    motor.step(-steps_per_rev);
+    motor.step(-step_produto);
     giros --;
     delay(500);
   }
