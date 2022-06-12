@@ -123,7 +123,8 @@ void loop(){
 
   //mover atuador
   int giros = 0;
-  int step_produto = steps_per_rev * 5;//numero de revolucoes para mover 1 produto
+  //numero de revolucoes para mover 1 produto
+  int step_produto = steps_per_rev * 5;//MUDAR VALOR!!
   
   digitalWrite(led1_pin, LOW);//nao esta movendo
   while(dist >= 50 && itens > 0){ //distancia sem o produto e com estoque
