@@ -9,15 +9,21 @@
 #define IN2 2
 #define IN3 4
 #define IN4 16
+//inicializando motor de passo
+const int steps_per_rev = 200; //Set to 200 for NEMA 17
+Stepper motor(steps_per_rev, IN1, IN2, IN3, IN4);
 
 // initialize the library by associating any needed LCD interface pin
 // with the arduino pin number it is connected to
 const int rs = 17, en = 5, d4 = 18, d5 = 19, d6 = 21, d7 = 3;
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
-//hc-sr04 pin setup
+//HC-SR04 pin setup
 #define trigger 1
 #define echo 22
+//inicializando ultrassonico
+Ultrasonic ultrassom(trigger, echo);// trigger & echo pins
+float dist = 0.0;
 
 //informações da rede WIFI
 char* ssid = "CSI-Lab"; //SSID da rede WIFI
@@ -42,21 +48,13 @@ PubSubClient client(espClient); //instancia o Cliente MQTT passando o objeto esp
 void conectar();
 void conectarmqtt();
 
-//inicializando motor de passo
-const int steps_per_rev = 200; //Set to 200 for NEMA 17
-Stepper motor(steps_per_rev, IN1, IN2, IN3, IN4);
-
-//inicializando ultrassonico
-Ultrasonic ultrassom(trigger, echo);// trigger & echo pins
-float dist = 0.0;
-
 //quantidade de itens
 int quantidade;
 
 void setup(){
   Serial.begin(115200);//monitor
   motor.setSpeed(60);//nema17 speed
-  pinMode(23, OUTPUT);//led1
+  pinMode(2, OUTPUT);//led1
 
   //Funções MQTT
   conectar();
@@ -133,14 +131,8 @@ void conectarmqtt () //conectar com broker
   client.subscribe(mqttTopicSub);
 }
 
-//exibir nome cliente
-void nome_cliente(char msg){
-  lcd.clear();
-  lcd.print(msg);
-}
-
 void loop(){
-  //receber dados do DB
+  //receber dados do DB ??????
   client.subscribe(topic_cliente);
   client.subscribe(topic_itens);
 
