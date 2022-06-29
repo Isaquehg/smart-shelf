@@ -1,8 +1,8 @@
-#include <Stepper.h>       // motor de passo NEMA17
-#include <Ultrasonic.h>    // ultrassonico
-#include <LiquidCrystal.h> // display
-#include <WiFi.h>   // biblioteca do Node MCU
-#include <PubSubClient.h>  // biblioteca comunicação mqtt
+#include <Stepper.h>            // motor de passo NEMA17
+#include <Ultrasonic.h>         // ultrassonico
+#include <LiquidCrystal_I2C.h>  // display
+#include <WiFi.h>               // biblioteca do Node MCU
+#include <PubSubClient.h>       // biblioteca comunicação mqtt
 
 //NEMA 17 pin setup
 #define IN1 15
@@ -13,10 +13,11 @@
 const int steps_per_rev = 200; //Set to 200 for NEMA 17
 Stepper motor(steps_per_rev, IN1, IN2, IN3, IN4);
 
-// initialize the library by associating any needed LCD interface pin
-// with the arduino pin number it is connected to
-const int rs = 17, en = 5, d4 = 18, d5 = 19, d6 = 21, d7 = 3;
-LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+// pinagem e inicialização LCD com I2C
+#define endereco 0x27 // VERIFICAR!!!
+#define colunas 16
+#define linhas 2
+LiquidCrystal_I2C lcd(endereco, colunas, linhas);
 
 //HC-SR04 pin setup
 #define trigger 1
@@ -60,8 +61,9 @@ void setup(){
   conectar();
   conectarmqtt();
 
-  // set up the LCD's number of columns and rows:
-  lcd.begin(16, 2);
+  //setup LCD
+  lcd.init();
+  lcd.backlight();
 }
 
 void callback(char* topic, byte* message, unsigned int length) {
