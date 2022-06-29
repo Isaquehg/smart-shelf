@@ -30,13 +30,13 @@ const char* mqttTopicSub = "broker";        //tópico que sera assinado ????????
 const char* mqttUser = "csilab";            //usuário
 const char* mqttPassword = "WhoAmI#2020";   //senha
 const char *ID = "SMARTSHELF";  // Nome do dispositivo - MUDE PARA NÃO HAVER COLISÃO
+//topicos criados
+const char* topicbd = "SmartShelf/#";
+const char* topic_itens = "SmartShelf/itens";
+const char* topic_cliente = "SmartShelf/cliente";
 
 WiFiClient espClient; // Cria o objeto espClient
 PubSubClient client(espClient); //instancia o Cliente MQTT passando o objeto espClient
-
-const char* topicbd = "SmartShelf/#";
-const char* topic_itens = "SmarShelf/itens";
-const char* topic_cliente = "SmartShelf/cliente";
 
 //prototipos da funcoes de conexoes com internet - MQTT
 void conectar();
@@ -66,23 +66,23 @@ void setup(){
   lcd.begin(16, 2);
 }
 
-void callback(char* topic, byte* message, unsigned int length){
-  //armazena mensagem recebida em uma variavel inteira - pode mudar a conversão para qualquer outro tipo de variável, se necessário
-  //payload[length] = '\0';
-  //int MSG = atoi((char*)payload);
-
-  char MSG[15];
-
-  //disribuir mensagens
-  if(String(topic) == "SmartShelf/itens"){
-    n_itens(MSG);
+void callback(char* topic, byte* message, unsigned int length) {
+  String messagestr;
+  
+  for (int i = 0; i < length; i++) {
+    Serial.print((char)message[i]);
+    messagestr += (char)message[i];
   }
-  else if(String(topic) == "SmartShelf/cliente"){
-    //convertendo para string
-    for (int i = 0; i < length; i++) {
-      MSG += (char)message[i];
-    }
-    nome_cliente(MSG);
+  Serial.println();
+
+  if (String(topic) == topic_cliente) {
+    Serial.print("Changing display");
+    lcd.clear();
+    lcd.print(messagestr);
+  }
+  else if(String(topic) == topic_itens){
+    Serial.print("Changing itens");
+    quantidade = messagestr.toInt();
   }
 }
 
@@ -140,6 +140,10 @@ void nome_cliente(char msg){
 }
 
 void loop(){
+  //receber dados do DB
+  client.subscribe(topic_cliente);
+  client.subscribe(topic_itens);
+
   int led1_pin = 2;//verificar quando sensor esta funcionando
 
   //MQTT refresh
@@ -171,9 +175,9 @@ void loop(){
   digitalWrite(led1_pin, LOW);//nao esta movendo
 
   //publicar nova quantidade de itens 
-  char quantidade[10];
+  char quantidade[11];
   dtostrf(itens, 1, 1, quantidade);
-  client.publish("SmartShelf/itens", "quantidade");//publicacao no broker MQTT
+  client.publish("SmartShelf/itens", quantidade);//publicacao no broker MQTT
 
   //retornar atuador
   while(giros > 0){
