@@ -1,31 +1,5 @@
-#include <Stepper.h>            // motor de passo NEMA17
-#include <Ultrasonic.h>         // ultrassonico
-#include <LiquidCrystal_I2C.h>  // display
 #include <WiFi.h>               // biblioteca do Node MCU
 #include <PubSubClient.h>       // biblioteca comunicação mqtt
-
-//NEMA 17 pin setup
-#define IN1 14
-#define IN2 27
-#define IN3 26
-#define IN4 25
-//inicializando motor de passo
-const int steps_per_rev = 200; //Set to 200 for NEMA 17
-Stepper motor(steps_per_rev, IN1, IN2, IN3, IN4);
-
-// pinagem e inicialização LCD com I2C
-//UTILIZAR PORTAS 22(SCL) E 21(SDA)
-#define endereco 0x27 // VERIFICAR!!!
-#define colunas 16
-#define linhas 2
-LiquidCrystal_I2C lcd(endereco, colunas, linhas);
-
-//HC-SR04 pin setup
-#define trigger 33
-#define echo 32
-//inicializando ultrassonico
-Ultrasonic ultrassom(trigger, echo);// trigger & echo pins
-float dist = 0.0;
 
 //informações da rede WIFI
 char* ssid = "CSI-Lab"; //SSID da rede WIFI
@@ -34,12 +8,11 @@ char* password = "In@teLCS&I"; //senha da rede wifi
 //informações do broker MQTT
 const char* mqttServer = "192.168.66.32";   //servidor
 const int mqttPort = 1883;                  //porta
-const char* mqttTopicSub = "broker";        //tópico que sera assinado ????????
 const char* mqttUser = "csilab";            //usuário
 const char* mqttPassword = "WhoAmI#2020";   //senha
 const char *ID = "SMARTSHELF";  // Nome do dispositivo - MUDE PARA NÃO HAVER COLISÃO
 //topicos criados
-const char* topicbd = "SmartShelf/#";
+const char* topic_bd = "SmartShelf/#";
 const char* topic_itens = "SmartShelf/itens";
 const char* topic_cliente = "SmartShelf/cliente";
 
@@ -51,20 +24,14 @@ void conectar();
 void conectarmqtt();
 
 //quantidade de itens
-int quantidade;
+//String quantidade;
 
 void setup(){
   Serial.begin(115200);//monitor
-  motor.setSpeed(60);//nema17 speed
-  pinMode(12, OUTPUT);//led1
 
   //Funções MQTT
   conectar();
   conectarmqtt();
-
-  //setup LCD
-  lcd.init();
-  lcd.backlight();
 }
 
 void callback(char* topic, byte* message, unsigned int length) {
@@ -75,19 +42,6 @@ void callback(char* topic, byte* message, unsigned int length) {
     messagestr += (char)message[i];
   }
   Serial.println();
-
-  //exibindo nome do cliente vindo do broker
-  if (String(topic) == topic_cliente) {
-    Serial.print("Changing display");
-    lcd.clear();
-    lcd.setCursor(0,0);
-    lcd.print(messagestr);
-  }
-  //recebendo valor de itens do broker
-  else if(String(topic) == topic_itens){
-    Serial.print("Changing itens");
-    quantidade = messagestr.toInt();
-  }
 }
 
 void conectar()//Conectar com internet
@@ -136,49 +90,15 @@ void conectarmqtt () //conectar com broker
   //subscreve no tópico
   client.subscribe(topic_cliente);
   client.subscribe(topic_itens);
+  client.subscribe(topic_bd);
 }
 
 void loop(){
-  int led1_pin = 2;//verificar quando sensor esta funcionando
-
   //MQTT refresh
   client.loop();
   delay(2000);
 
-  //obter quantidade de itens em estoque do DB
-  int itens = quantidade;
-
-  //configuracao ultrassonico
-  dist = ultrassom.Ranging(CM);//calcula da distancia(cm)
-  Serial.print("Distancia: ");
-  Serial.println(dist);
-
-  //mover atuador
-  int giros = 0;
-  //numero de revolucoes para mover 1 produto
-  int step_produto = steps_per_rev * 5;//MUDAR VALOR!!
-  
-  digitalWrite(led1_pin, LOW);//nao esta movendo
-  while(dist >= 10 && itens > 0){ //distancia sem o produto e com estoque
-    digitalWrite(led1_pin, HIGH);
-    motor.step(step_produto);
-    giros ++;
-    delay(500);
-    dist = ultrassom.Ranging(CM);
-    itens --;
-  }
-  digitalWrite(led1_pin, LOW);//nao esta movendo
-
-  //publicar nova quantidade de itens
-  char* quantidade_str;
-  quantidade = itens;
-  dtostrf(quantidade, 1, 1, quantidade_str);
-  client.publish("SmartShelf/itens", quantidade_str);//publicacao no broker MQTT
-
-  //retornar atuador
-  while(giros > 0){
-    motor.step(-step_produto);
-    giros --;
-    delay(500);
-  }
+  client.publish("SmartShelf/itens", "20");//publicacao no broker MQTT
+  client.publish("SmartShelf/cliente", "Larry");//publicacao no broker MQTT
+  client.publish("SmartShelf/cliente", "Perry");//publicacao no broker MQTT
 }
