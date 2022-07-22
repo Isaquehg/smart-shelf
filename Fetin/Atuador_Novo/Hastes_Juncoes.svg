@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg10753"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   sodipodi:docname="Base.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview10755"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.94316065"
+     inkscape:cx="410.32246"
+     inkscape:cy="913.94823"
+     inkscape:window-width="1366"
+     inkscape:window-height="705"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs10750">
+    <rect
+       x="63.615886"
+       y="763.39063"
+       width="314.89863"
+       height="150.5576"
+       id="rect22608" />
+    <rect
+       x="501.50523"
+       y="516.34894"
+       width="285.21122"
+       height="157.97945"
+       id="rect21871" />
+    <rect
+       x="32.868208"
+       y="512.10788"
+       width="337.16419"
+       height="154.79866"
+       id="rect21865" />
+    <rect
+       x="426.22643"
+       y="264.00593"
+       width="319.13969"
+       height="184.48607"
+       id="rect20343" />
+    <rect
+       x="247.04169"
+       y="286.27149"
+       width="382.75558"
+       height="301.11519"
+       id="rect20334" />
+    <rect
+       x="73.451533"
+       y="311.67272"
+       width="549.89391"
+       height="353.36143"
+       id="rect17418" />
+  </defs>
+  <g
+     inkscape:label="Camada 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke-width:0.1;stroke:#000000;stroke-opacity:1;stroke-dasharray:none"
+       id="rect15956"
+       width="180"
+       height="30"
+       x="19.43405"
+       y="28.363209"
+       rx="15"
+       ry="15" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,80.063997,-70.394716)"
+       id="text17416"
+       style="font-size:42.6667px;white-space:pre;shape-inside:url(#rect17418);fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.377953;stroke-dasharray:none;stroke-opacity:1"><tspan
+         x="73.451172"
+         y="350.598"
+         id="tspan23002">4x</tspan></text>
+    <rect
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.1;stroke-dasharray:none;stroke-opacity:1"
+       id="rect17422"
+       width="30"
+       height="35"
+       x="18.825243"
+       y="94.627594"
+       rx="10.272799"
+       ry="10.272799" />
+    <path
+       id="rect20330"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.1"
+       d="m 159.35947,126.56668 h 25 v 3.1 h -25 z m 5.17409,-30.434977 h 14.45441 c 5.69113,0 10.27279,4.581667 10.27279,10.272797 v 19.4544 c 0,5.69113 -4.58166,10.2728 -10.27279,10.2728 h -14.45441 c -5.69113,0 -10.2728,-4.58167 -10.2728,-10.2728 v -19.4544 c 0,-5.69113 4.58167,-10.272797 10.2728,-10.272797 z" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,-57.508319,-7.293738)"
+       id="text20332"
+       style="font-size:37.3333px;white-space:pre;shape-inside:url(#rect20334);fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.377953;stroke-dasharray:none;stroke-opacity:1"><tspan
+         x="247.04102"
+         y="320.33179"
+         id="tspan23004">1x Junção fixa </tspan><tspan
+         x="247.04102"
+         y="366.99841"
+         id="tspan23006">plataforma</tspan></text>
+    <text
+       xml:space="preserve"
+       transform="scale(0.26458333)"
+       id="text20341"
+       style="font-size:37.3333px;white-space:pre;shape-inside:url(#rect20343);fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.377953;stroke-dasharray:none;stroke-opacity:1"><tspan
+         x="426.22656"
+         y="298.06616"
+         id="tspan23008">1x Junção Móvel </tspan><tspan
+         x="426.22656"
+         y="344.73279"
+         id="tspan23010">Plataforma</tspan></text>
+    <rect
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.1;stroke-dasharray:none;stroke-opacity:1"
+       id="rect21077"
+       width="30"
+       height="30"
+       x="18.795406"
+       y="164.38963"
+       rx="9.8184938"
+       ry="9.8184938" />
+    <path
+       id="path21857"
+       style="fill:none;stroke:#000000;stroke-width:0.0354342"
+       d="m 169.68277,198.93263 -3.52741,2.08658 -3.78067,-1.69358 -0.25326,-3.78015 3.52741,-2.08657 3.78068,1.69357 z m -8.94001,-27.24926 h 10.36301 c 5.43945,0 9.8185,4.37905 9.8185,9.8185 v 17.36301 c 0,5.43945 -4.37905,9.81849 -9.8185,9.81849 h -10.36301 c -5.43944,0 -9.81849,-4.37904 -9.81849,-9.81849 v -17.36301 c 0,-5.43945 4.37905,-9.8185 9.81849,-9.8185 z" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,126.79883,6.7326808)"
+       id="text21863"
+       style="font-size:42.6667px;white-space:pre;shape-inside:url(#rect21865);fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.377953;stroke-dasharray:none;stroke-opacity:1"><tspan
+         x="32.869141"
+         y="551.03354"
+         id="tspan23012">1x Junção </tspan><tspan
+         x="32.869141"
+         y="604.36692"
+         id="tspan23014">Móvel Base</tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,-127.64042,1.1221135)"
+       id="text21869"
+       style="font-size:42.6667px;white-space:pre;shape-inside:url(#rect21871);fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.377953;stroke-dasharray:none;stroke-opacity:1"><tspan
+         x="501.50586"
+         y="555.27573"
+         id="tspan23016">1X Junção </tspan><tspan
+         x="501.50586"
+         y="608.60911"
+         id="tspan23018">Fixa Base</tspan></text>
+    <rect
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.1;stroke-dasharray:none;stroke-opacity:1"
+       id="rect22604"
+       width="100"
+       height="10"
+       x="17.953817"
+       y="248.82867"
+       rx="0"
+       ry="0" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,3.646869,17.953817)"
+       id="text22606"
+       style="font-size:42.6667px;white-space:pre;shape-inside:url(#rect22608);fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.377953;stroke-dasharray:none;stroke-opacity:1"><tspan
+         x="63.615234"
+         y="802.31675"
+         id="tspan23020">1X Haste </tspan><tspan
+         x="63.615234"
+         y="855.65012"
+         id="tspan23022">Auxiliar</tspan></text>
+  </g>
+</svg>
